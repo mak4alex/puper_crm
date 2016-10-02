@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  step: MyString
+  start_at: 2016-10-02 20:32:13
+  end_at: 2016-10-02 20:32:13
+  deal_id: 1
+  accepted: false
+  probability: 9.99
+
+two:
+  name: MyString
+  step: MyString
+  start_at: 2016-10-02 20:32:13
+  end_at: 2016-10-02 20:32:13
+  deal_id: 1
+  accepted: false
+  probability: 9.99

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  agent_id: 1
+  currency_id: 1
+  promo: MyString
+  name: MyString
+  sku: MyString
+  unit_type: MyString
+  unit_price: 9.99
+  unit_price: 9.99
+  promo_unit_price: 9.99
+  promo_unit_price: 9.99
+  description: MyString
+  type: 
+  sent_at: 2016-10-02 20:27:39
+  responded_at: 2016-10-02 20:27:39
+
+two:
+  agent_id: 1
+  currency_id: 1
+  promo: MyString
+  name: MyString
+  sku: MyString
+  unit_type: MyString
+  unit_price: 9.99
+  unit_price: 9.99
+  promo_unit_price: 9.99
+  promo_unit_price: 9.99
+  description: MyString
+  type: 
+  sent_at: 2016-10-02 20:27:39
+  responded_at: 2016-10-02 20:27:39

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  full_name: MyString
+  position: MyString
+  phone: MyString
+  email: MyString
+  skype: MyString
+  fax: MyString
+  type: 
+
+two:
+  full_name: MyString
+  position: MyString
+  phone: MyString
+  email: MyString
+  skype: MyString
+  fax: MyString
+  type: 
