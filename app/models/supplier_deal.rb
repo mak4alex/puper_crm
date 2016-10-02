@@ -19,5 +19,5 @@
 #  updated_at       :datetime         not null
 #
 
-class Deal < ApplicationRecord
+class SupplierDeal < Deal
 end

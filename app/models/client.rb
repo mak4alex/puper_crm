@@ -13,5 +13,5 @@
 #  updated_at    :datetime         not null
 #
 
-class Agent < ApplicationRecord
+class Client < Agent
 end

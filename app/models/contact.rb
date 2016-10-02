@@ -14,5 +14,5 @@
 #  updated_at :datetime         not null
 #
 
-class Worker < ApplicationRecord
+class Contact < Worker
 end
