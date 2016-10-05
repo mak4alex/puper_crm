@@ -49,3 +49,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'faker', '~> 1.6', '>= 1.6.6'
 gem 'annotate', '~> 2.7', '>= 2.7.1'
+gem 'bootstrap', '~> 4.0.0.alpha4'
+gem 'slim-rails', '~> 3.1', '>= 3.1.1'
+gem 'active_link_to', '~> 1.0', '>= 1.0.3'

@@ -1,0 +1,11 @@
+header.row
+  div.col-sm-12
+    ul.nav.nav-tabs
+      li.nav-item
+        = active_link_to('Home', root_path, active: :exact, class: 'nav-link')
+      li.nav-item
+        = active_link_to('Clients', clients_path, active: :inclusive, class: 'nav-link')
+      li.nav-item
+        = active_link_to('Suppliers', suppliers_path, active: :inclusive, class: 'nav-link')
+      li.nav-item
+        a.nav-link.disabled href="#" Disabled
