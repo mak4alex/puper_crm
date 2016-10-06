@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   def index
-    @clients = Client.all
+    @clients = Client.includes(:contact, :manager).all
   end
 
   def show

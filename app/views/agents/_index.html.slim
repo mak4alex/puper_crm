@@ -1,0 +1,21 @@
+h1 = type
+div.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th id
+        th Name
+        th Company name
+        th Delivery time
+        th Contact
+        th Manager
+    tbody
+      - agents.each do |agent|
+        tr
+          td = link_to(agent.id, client_path(agent))
+          td = agent.name
+          td = agent.company_name
+          td = agent.delivery_time
+          td = link_to(agent.contact.full_name, contact_path(agent.contact))
+          td = link_to(agent.manager.full_name, manager_path(agent.manager))
+p = debug agents

@@ -1,16 +1,1 @@
-h1 Clients
-div.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        th id
-        th Name
-        th Company name
-    tbody
-      - @clients.each do |client|
-        tr
-          td = client.id
-          td = client.name
-          td = client.company_name
-p
-  = debug @clients
+= render(partial: 'agents/index', locals: { type: 'Clients', agents: @clients })
