@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002173236) do
+ActiveRecord::Schema.define(version: 20161007110438) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "type"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 20161002173236) do
   end
 
   create_table "deals", force: :cascade do |t|
-    t.integer  "agent_id"
     t.integer  "currency_id"
     t.string   "promo"
     t.string   "name"
@@ -43,12 +42,20 @@ ActiveRecord::Schema.define(version: 20161002173236) do
     t.decimal  "promo_unit_price", precision: 10, scale: 2
     t.string   "description"
     t.string   "type"
-    t.datetime "sent_at"
-    t.datetime "responded_at"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.index ["agent_id"], name: "index_deals_on_agent_id"
     t.index ["currency_id"], name: "index_deals_on_currency_id"
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.datetime "responded_at"
+    t.datetime "sent_at"
+    t.integer  "agent_id"
+    t.integer  "deal_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["agent_id"], name: "index_offers_on_agent_id"
+    t.index ["deal_id"], name: "index_offers_on_deal_id"
   end
 
   create_table "plans", force: :cascade do |t|

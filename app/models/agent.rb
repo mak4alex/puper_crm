@@ -16,4 +16,6 @@
 class Agent < ApplicationRecord
   belongs_to :contact
   belongs_to :manager
+  has_many :offers
+  has_many :deals, through: :offers
 end
