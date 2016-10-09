@@ -18,4 +18,7 @@ class Plan < ApplicationRecord
   NAMES = %w{STRATEGIC PERSPECTIVE OPERATIONAL CURRENT IMMEDIATE}
   STEPS = %w{MONTH QUARTER DECADE}
 
+  belongs_to :deal
+
+  has_many :values
 end

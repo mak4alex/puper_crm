@@ -10,5 +10,5 @@
 #
 
 class Currency < ApplicationRecord
-  has_many :deal
+  has_many :deals
 end

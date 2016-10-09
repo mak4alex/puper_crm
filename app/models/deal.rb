@@ -20,4 +20,7 @@
 #
 
 class Deal < ApplicationRecord
+  belongs_to :currency
+
+  has_many :plans
 end

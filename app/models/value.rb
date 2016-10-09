@@ -10,4 +10,5 @@
 #
 
 class Value < ApplicationRecord
+  belongs_to :plan
 end
