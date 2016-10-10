@@ -1,0 +1,2 @@
+class ClientOffer < Offer
+end

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  responded_at: 2016-10-07 13:53:31
+  sent_at: 2016-10-07 13:53:31
+  agent_id: 1
+  deal_id: 1
+
+two:
+  responded_at: 2016-10-07 13:53:31
+  sent_at: 2016-10-07 13:53:31
+  agent_id: 1
+  deal_id: 1

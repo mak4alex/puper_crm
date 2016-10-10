@@ -8,4 +8,15 @@ header.row
       li.nav-item
         = active_link_to('Suppliers', suppliers_path, active: :inclusive, class: 'nav-link')
       li.nav-item
+        = active_link_to('Client Deals', client_deals_path, active: :inclusive, class: 'nav-link')
+      li.nav-item
+        = active_link_to('Supplier Deals', supplier_deals_path, active: :inclusive, class: 'nav-link')
+      li.nav-item.dropdown
+        a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" Menu
+        div.dropdown-menu
+          = link_to('New deal', new_deal_path, class: 'dropdown-item')
+          a class="dropdown-item" href="#" Another action
+          div class="dropdown-divider"
+          a class="dropdown-item" href="#" Separated link
+      li.nav-item
         a.nav-link.disabled href="#" Disabled

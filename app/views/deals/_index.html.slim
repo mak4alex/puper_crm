@@ -1,0 +1,28 @@
+h1 = type
+div.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th id
+        th SKU
+        th Name
+        th Unit type
+        th Currency
+        th Unit price
+        th Promo Unit Price
+        th Promo
+        th Description
+    tbody
+      - deals.each do |deal|
+        tr
+          td = link_to(deal.id, deal)
+          td = deal.sku
+          td = deal.name
+          td = deal.unit_type
+          td = deal.currency.abbr
+          td = deal.unit_price
+          td = deal.promo_unit_price
+          td = deal.promo
+          td = deal.description
+
+p = debug deals
