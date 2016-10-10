@@ -12,6 +12,13 @@
 #
 
 class Offer < ApplicationRecord
+  after_initialize :set_default_values
+
   belongs_to :deal
   belongs_to :agent
+
+  def set_default_values
+    self.sent_at ||= Time.now
+  end
+  
 end

@@ -14,9 +14,9 @@ header.row
       li.nav-item.dropdown
         a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" Menu
         div.dropdown-menu
-          = link_to('New deal', new_deal_path, class: 'dropdown-item')
-          a class="dropdown-item" href="#" Another action
+          = link_to('New deal', new_deal_path, class: 'dropdown-item')          
           div class="dropdown-divider"
-          a class="dropdown-item" href="#" Separated link
+          = link_to('Send Client offer', new_for_client_offers_path, class: 'dropdown-item')
+          = link_to('Send Supplier offer', new_for_supplier_offers_path, class: 'dropdown-item')
       li.nav-item
         a.nav-link.disabled href="#" Disabled

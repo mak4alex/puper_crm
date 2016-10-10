@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   resources :client_deals, only: [:index, :show]
   resources :supplier_deals, only: [:index, :show]
   resources :deals, only: [:new, :create]
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :offers, only: [] do
+    collection do
+      get 'new_for_client'
+      get 'new_for_supplier'
+      post 'create_for_client'
+      post 'create_for_supplier'
+    end
+  end
 end
