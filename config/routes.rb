@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :managers, only: [:index, :show]
   resources :client_deals, only: [:index, :show]
   resources :supplier_deals, only: [:index, :show]
+  resources :deals, only: [:new, :create]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

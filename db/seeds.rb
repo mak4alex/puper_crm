@@ -56,7 +56,7 @@ def deal(type)
     promo: '10%',
     name: Faker::Commerce.product_name,
     sku: Faker::Code.asin,
-    unit_type: ['kg', 'unit', 'l'],
+    unit_type: Deal::UNIT_TYPES.sample,
     unit_price: price,
     promo_unit_price: price - price * 0.1,
     description: Faker::Hipster.sentence,

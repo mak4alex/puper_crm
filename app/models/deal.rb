@@ -17,5 +17,7 @@
 #
 
 class Deal < ApplicationRecord
+  TYPES = ['ClientDeal', 'SupplierDeal']
+  UNIT_TYPES = ['kg', 'unit', 'l']
   belongs_to :currency
 end
