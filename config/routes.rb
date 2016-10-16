@@ -7,12 +7,10 @@ Rails.application.routes.draw do
   resources :client_deals, only: [:index, :show]
   resources :supplier_deals, only: [:index, :show]
   resources :deals, only: [:new, :create]
-  resources :offers, only: [] do
+  resources :offers, only: [:index, :create] do
     collection do
       get 'new_for_client'
       get 'new_for_supplier'
-      post 'create_for_client'
-      post 'create_for_supplier'
     end
   end
 end

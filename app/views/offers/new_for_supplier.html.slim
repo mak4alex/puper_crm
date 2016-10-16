@@ -1,0 +1,9 @@
+div.row
+  div.offset-sm-2.col-sm-8
+    h1 New Supplier Offer
+    hr
+    = simple_form_for(@offer, html: { class: 'form-horizontal' }, wrapper: :horizontal_form) do |form|
+      = form.hidden_field :type, value: SupplierOffer.to_s
+      = form.association :deal, collection: SupplierDeal.all, as: :select, include_blank: false
+      = form.association :agent,collection: Supplier.all, as: :select, include_blank: false, label_method: lambda { |o| "#{o.name} | #{o.company_name}" }
+      = form.button :submit, class: 'btn btn-primary'

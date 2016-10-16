@@ -1,0 +1,20 @@
+h1 Offers
+div.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th id
+        th Type
+        th Agent
+        th Deal
+        th Sent At
+        th Responded At
+    tbody
+      - @offers.each do |offer|
+        tr
+          td = offer.id
+          td = offer.type
+          td = offer.agent.name
+          td = offer.deal.name
+          td = offer.sent_at
+          td = offer.responded_at || 'No respond'

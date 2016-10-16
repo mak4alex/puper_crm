@@ -1,11 +1,9 @@
-[
-  { name: 'Belorusian ruble', abbr: 'BYN' },
+[ { name: 'Belorusian ruble', abbr: 'BYN' },
   { name: 'Euro', abbr: 'EUR' },
   { name: 'Dollar USA', abbr: 'USD' }
 ].each do |currency|
   Currency.create!(currency)
 end
-
 
 def worker
   {
@@ -22,7 +20,6 @@ end
   Contact.create!(worker)
   Manager.create!(worker)
 end
-
 
 def agent
   name = Faker::Company.name
@@ -41,35 +38,25 @@ end
   Supplier.create!(agent)
 end
 
-def deal(type)
-  if type == ClientDeal
-    agent_id = Client.ids.sample
-  elsif type == SupplierDeal
-    agent_id = Supplier.ids.sample
-  else
-    raise 'Not supported deal type'
-  end
+def deal
   price = Faker::Commerce.price.to_f
+  promo_price = price - price * 0.1
   {
-    agent_id: agent_id,
     currency_id: Currency.ids.sample,
     promo: '10%',
     name: Faker::Commerce.product_name,
     sku: Faker::Code.asin,
     unit_type: Deal::UNIT_TYPES.sample,
     unit_price: price,
-    promo_unit_price: price - price * 0.1,
-    description: Faker::Hipster.sentence,
-    sent_at: Time.now,
-    responded_at: Time.now
+    promo_unit_price: promo_price,
+    description: Faker::Hipster.sentence
   }
 end
 
 20.times do
-  ClientDeal.create!(deal(ClientDeal))
-  SupplierDeal.create!(deal(SupplierDeal))
+  ClientDeal.create!(deal)
+  SupplierDeal.create!(deal)
 end
-
 
 40.times do
   Plan.create!({
@@ -88,4 +75,18 @@ end
     value: rand * 10_000,
     plan_id: Plan.ids.sample
   })
+end
+
+def offer(type)
+  {
+    deal_id: type == 'client' ? ClientDeal.ids.sample : SupplierDeal.ids.sample,
+    agent_id: type == 'client' ? Client.ids.sample : Supplier.ids.sample,
+    sent_at: Time.now,
+    responded_at: Time.now
+  }
+end
+
+10.times do
+  ClientOffer.create!(offer('client'))
+  SupplierOffer.create!(offer('supplier'))
 end
