@@ -20,6 +20,8 @@ class Deal < ApplicationRecord
   TYPES = ['ClientDeal', 'SupplierDeal']
   UNIT_TYPES = ['kg', 'unit', 'l']
 
+  attr_accessor :plan_count
+
   belongs_to :currency
   has_many :plans
 end

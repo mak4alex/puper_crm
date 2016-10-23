@@ -58,19 +58,21 @@ end
   SupplierDeal.create!(deal)
 end
 
-40.times do
-  Plan.create!({
-    name: Plan::NAMES.sample,
-    step: Plan::STEPS.sample,
-    start_at: Time.now,
-    end_at: Time.now,
-    deal_id: Deal.ids.sample,
-    accepted: [true, false].sample,
-    probability: rand * 100
-  })
+1.upto(Deal.count) do |deal_id|
+  4.times do
+    Plan.create!({
+      name: Plan::NAMES.sample,
+      step: Plan::STEPS.sample,
+      start_at: Time.now,
+      end_at: Time.now,
+      deal_id: deal_id,
+      accepted: [true, false].sample,
+      probability: rand * 100
+    })
+  end
 end
 
-200.times do
+250.times do
   Value.create!({
     value: rand * 10_000,
     plan_id: Plan.ids.sample

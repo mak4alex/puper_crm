@@ -1,6 +1,7 @@
-h1 New Deal
 div.row
-  div.col-sm-12
+  div.offset-sm-2.col-sm-8
+    h1 New Deal
+    hr
     = simple_form_for(@deal, html: { class: 'form-horizontal' }, wrapper: :horizontal_form) do |form|
       = form.input :type, collection: Deal::TYPES, prompt: "Select type"
       = form.input :sku
@@ -11,7 +12,4 @@ div.row
       = form.input :unit_price
       = form.input :promo_unit_price
       = form.input :description, as: :text
-      = form.button :submit
-  
-      //  currency_id      :integer
-    
+      = form.button :submit, class: 'btn btn-primary'

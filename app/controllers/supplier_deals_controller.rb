@@ -4,5 +4,6 @@ class SupplierDealsController < ApplicationController
   end
 
   def show
+    @supplier_deal = SupplierDeal.find(params[:id])
   end
 end

@@ -4,5 +4,6 @@ class ClientDealsController < ApplicationController
   end
 
   def show
+    @client_deal = ClientDeal.find(params[:id])
   end
 end

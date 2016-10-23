@@ -1,0 +1,42 @@
+div.raw
+  div.col-sm-12
+    h1 = "#{deal.id} #{deal.name}"
+    div.table-responsive
+      table.table.table-striped
+        thead
+          tr
+            th SKU
+            th Unit type
+            th Currency
+            th Unit price
+            th Promo Unit Price
+            th Promo
+            th Description
+        tbody
+            tr
+              td = deal.sku
+              td = deal.unit_type
+              td = deal.currency.abbr
+              td = deal.unit_price
+              td = deal.promo_unit_price
+              td = deal.promo
+              td = deal.description
+div.raw
+  div.col-sm-12
+    div.table-responsive
+      table.table.table-striped
+        thead
+          tr
+          th id
+          th Plan
+          th Accep
+          th Prob
+          tbody
+            - deal.plans.each do |plan|
+              tr
+                td = plan.id
+                td = plan.name
+                td = plan.accepted
+                td = plan.probability
+                - plan.values.each do |value|                  
+                  td = value.value      
