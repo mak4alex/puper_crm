@@ -17,6 +17,4 @@
 #
 
 class ClientDeal < Deal
-  has_many :offers, class_name: 'ClientOffer'
-  has_many :agents, through: :offers
 end
