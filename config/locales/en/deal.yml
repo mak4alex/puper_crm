@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    attributes:
+      deal:
+        name: Name
+        unit: Unit
+        unit_type: Unit type
+        unit_price: Unit price
+        promo_unit_price: Promo unit price
+        sku: SKU

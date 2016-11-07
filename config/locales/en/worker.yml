@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    attributes:
+      worker:
+        full_name:  Full name
+        position: Position
+        phone: Phone
+        email: Email
+        skype: Skype
+        fax: Fax

@@ -47,11 +47,14 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'faker', '~> 1.6', '>= 1.6.6'
-gem 'annotate', '~> 2.7', '>= 2.7.1'
-gem 'bootstrap', '~> 4.0.0.alpha4'
-gem 'slim-rails', '~> 3.1', '>= 3.1.1'
 gem 'active_link_to', '~> 1.0', '>= 1.0.3'
-gem 'rack-mini-profiler', '~> 0.10.1'
-gem 'simple_form', '~> 3.3'
+gem 'annotate', '~> 2.7', '>= 2.7.1'
+gem 'axlsx', '~> 2.0.1'
+gem 'bootstrap', '~> 4.0.0.alpha4'
+gem 'faker', '~> 1.6', '>= 1.6.6'
 gem 'mailgun_rails', '~> 0.8.0'
+gem 'pry-rails'
+gem 'rack-mini-profiler', '~> 0.10.1'
+gem 'roo'
+gem 'simple_form', '~> 3.3'
+gem 'slim-rails', '~> 3.1', '>= 3.1.1'

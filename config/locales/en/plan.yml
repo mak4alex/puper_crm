@@ -1,0 +1,6 @@
+en:
+  activerecord:
+    attributes:
+      plan:
+        name: Plan level
+        accepted: Accepted

@@ -58,25 +58,39 @@ end
   SupplierDeal.create!(deal)
 end
 
-1.upto(Deal.count) do |deal_id|
-  4.times do
-    Plan.create!({
-      name: Plan::NAMES.sample,
-      step: Plan::STEPS.sample,
-      start_at: Time.now,
-      end_at: Time.now,
-      deal_id: deal_id,
-      accepted: [true, false].sample,
-      probability: rand * 100
-    })
-  end
-end
+Deal.all.each do |deal|
+  Plan::NAMES.each_with_index do |name, index|
+    step, end_at_diff =   case name
+                          when 'STRATEGIC' then [Plan::STEPS[index], 4.month]
+                          when 'PERSPECTIVE' then [Plan::STEPS[index], 1.month]
+                          else [Plan::STEPS.last, 10.days]
+                          end
 
-250.times do
-  Value.create!({
-    value: rand * 10_000,
-    plan_id: Plan.ids.sample
-  })
+    plans_count = case name
+                  when 'STRATEGIC' then 1
+                  when 'PERSPECTIVE' then 3
+                  else 12
+                  end
+
+    plans_count.times do |i|
+      start_at = deal.plans.last.try(:end_at) || Time.now
+      plan = Plan.create(
+        name: name,
+        step: step,
+        start_at: start_at,
+        end_at: start_at + end_at_diff,
+        deal_id: deal.id,
+        accepted: [true, false].sample,
+        probability: rand * 100
+      )
+      puts "#{name} Plan #{i}/#{plans_count} of deal ##{deal.id}"
+      
+      plan.values.create(
+        value: rand * 10_000,
+        plan_id: plan.id
+      )
+    end
+  end
 end
 
 def offer(type)
