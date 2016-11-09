@@ -1,0 +1,5 @@
+en:
+  activerecord:
+    attributes:
+      currency:
+        name: Currency name

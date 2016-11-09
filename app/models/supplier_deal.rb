@@ -17,6 +17,4 @@
 #
 
 class SupplierDeal < Deal
-  has_many :offers, class_name: 'SupplierDeal'
-  has_many :agents, through: :offers
 end

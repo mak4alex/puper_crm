@@ -23,5 +23,7 @@ class Deal < ApplicationRecord
   attr_accessor :plan_count
 
   belongs_to :currency
-  has_many :plans
+  has_many :plans, foreign_key: :deal_id
+  has_many :offers, foreign_key: :deal_id
+  has_many :agents, through: :offers
 end
