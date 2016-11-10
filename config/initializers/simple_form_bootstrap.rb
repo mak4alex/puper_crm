@@ -143,7 +143,7 @@ SimpleForm.setup do |config|
     file: :vertical_file_input,
     boolean: :vertical_boolean,
     datetime: :multi_select,
-    date: :multi_select,
+    date: :horizontal_form,
     time: :multi_select
   }
 end

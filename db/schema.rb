@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010210546) do
+ActiveRecord::Schema.define(version: 20161109221159) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "type"
@@ -42,8 +42,12 @@ ActiveRecord::Schema.define(version: 20161010210546) do
     t.decimal  "promo_unit_price", precision: 10, scale: 2
     t.string   "description"
     t.string   "type"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.boolean  "accepted",                                  default: false
+    t.decimal  "probability",      precision: 4,  scale: 2
     t.index ["currency_id"], name: "index_deals_on_currency_id"
   end
 
@@ -62,13 +66,9 @@ ActiveRecord::Schema.define(version: 20161010210546) do
   create_table "plans", force: :cascade do |t|
     t.string   "name"
     t.string   "step"
-    t.datetime "start_at"
-    t.datetime "end_at"
     t.integer  "deal_id"
-    t.boolean  "accepted",                            default: false
-    t.decimal  "probability", precision: 4, scale: 2
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["deal_id"], name: "index_plans_on_deal_id"
   end
 
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20161010210546) do
     t.integer  "plan_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.datetime "set_at"
     t.index ["plan_id"], name: "index_values_on_plan_id"
   end
 

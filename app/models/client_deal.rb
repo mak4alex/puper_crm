@@ -14,6 +14,10 @@
 #  type             :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  start_at         :datetime
+#  end_at           :datetime
+#  accepted         :boolean          default(FALSE)
+#  probability      :decimal(4, 2)
 #
 
 class ClientDeal < Deal

@@ -3,13 +3,15 @@ div.row
     h1 New Deal
     hr
     = simple_form_for(@deal, html: { class: 'form-horizontal' }, wrapper: :horizontal_form) do |form|
-      = form.input :type, collection: Deal::TYPES, prompt: "Select type"
+      = form.input :type, collection: Deal::TYPES.values, prompt: "Select type"
       = form.input :sku
       = form.input :name
       = form.input :promo
       = form.association :currency, as: :radio_buttons, wrapper: :horizontal_radio_and_checkboxes
-      = form.input :unit_type, collection: Deal::UNIT_TYPES, prompt: "Select unit type"
+      = form.input :unit_type, collection: Deal::UNIT_TYPES.values, prompt: "Select unit type"
       = form.input :unit_price
       = form.input :promo_unit_price
       = form.input :description, as: :text
+      = form.input :start_at, as: :date, html5: true
+      = form.input :end_at, as: :date, html5: true
       = form.button :submit, class: 'btn btn-primary'
