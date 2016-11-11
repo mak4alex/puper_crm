@@ -1,7 +1,8 @@
 class OffersMailer < ApplicationMailer
 
   def distribute(offer)
-    attachments['offer.xls'] = File.open(Rails.root.join('README.md'), 'r').read
+    DealXlsxService.new(Rails.root.join('tmp', 'export.xlsx')).export(offer.deal)
+    attachments['offer.xlsx'] = File.open(Rails.root.join('tmp', 'export.xlsx'), 'r').read
     contact_email = offer.agent.contact.email
     subject = offer.type
     p '======================================'

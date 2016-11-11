@@ -4,9 +4,12 @@ div.raw
       h1 = "#{deal.id} #{deal.name}"
   div.raw
     div.col-sm-4
-      div.btn-group.btn-group role="group" aria-label="Actions"
-        button type="button" id="save_deal_values" class="btn btn-success" Save
-        button type="button" class="btn btn-info" Import
+      button type="button" id="save_deal_values" class="btn btn-success" Save
+      = form_tag(import_deal_path(deal), method: 'post', class: 'form-inline')
+        div.form-group
+          = file_field_tag :file, class: 'form-control'
+        = submit_tag 'Import', class: 'btn btn-info' 
+        
     div.col-sm-8.text-sm-right  
         = simple_form_for @offer, url: offers_path, html: { class: 'form-inline' }  do |f|
           = f.hidden_field :deal_id, value: params[:id]

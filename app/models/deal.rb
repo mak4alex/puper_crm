@@ -67,6 +67,20 @@ class Deal < ApplicationRecord
     dates
   end
 
+
+  def import(imported_deal)
+    imported_deal.plans.each do |plan|
+      if plan.name != Plan::NAMES[:strategic] && plan.name != Plan::NAMES[:perspective]
+        current_plan = plans.where(name: plan.name)
+        values = plan.values.to_a
+        current_plan.values.each do |value|
+          
+        end
+
+      end
+    end
+  end
+
   private
 
     def create_plans(plan_name)

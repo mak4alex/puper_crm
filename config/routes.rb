@@ -6,13 +6,10 @@ Rails.application.routes.draw do
   resources :managers, only: [:index, :show]
   resources :client_deals, only: [:index, :show]
   resources :supplier_deals, only: [:index, :show]
-  resources :deals, only: [:new, :create]
+  resources :deals, only: [:new, :create] do
+    post 'import', on: :member
+  end
   resources :plans, only: [:new, :create]
   resources :values, only: [:create]
-  resources :offers, only: [:index, :create] do
-    collection do
-      get 'new_for_client'
-      get 'new_for_supplier'
-    end
-  end
+  resources :offers, only: [:index, :create]
 end

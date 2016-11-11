@@ -12,7 +12,7 @@ class DealXlsxService
   end
 
   def export(deals)
-    @deals = deals
+    @deals = [deals].flatten
     Axlsx::Package.new do |package|
       workbook = package.workbook
 
@@ -52,28 +52,36 @@ class DealXlsxService
   private
 
   def write_deals(sheet, style)
-    @deals.each_with_index do |deal, index|
-      Plan::NAMES.count.times do |plan_name_index|
-        merge_value_columns(sheet, index, plan_name_index)
-        sheet.add_row(extract_data(deal, index, plan_name_index), style: style)
+    @deals.each_with_index do |deal, deal_index|
+      deal.plans.each_with_index do |plan, plan_index|
+
+        sheet.add_row(extract_data(deal, deal_index, plan.name), style: style)
+        #merge_value_columns(sheet, deal_index, plan_index, plan.name)
       end
-      merge_info_rows(sheet, index)
+      merge_info_rows(sheet, deal_index)
     end
   end
 
-  def merge_value_columns(sheet, index, plan_name_index)
-    cell_width = value_cell_width(plan_name_index)
-    VALUE_COLUMNS.step(cell_width).each do |column|
-      first_cell = "#{column}#{VERTICAL_MARGIN + index * 5 + plan_name_index}"
-      last_cell = "#{(column.to_i(36) + cell_width - 1).to_s(36).upcase}#{VERTICAL_MARGIN + index * 5 + plan_name_index}"
-      sheet.merge_cells([first_cell, last_cell].join(':'))
+  def merge_value_columns(sheet, deal_index, plan_index, plan_name)
+    cell_width = value_cell_width(plan_name)
+    start_position = 8
+    while start_position < @deals.last.header_dates.size do
+      last_cell = start_position + cell_width
+      #binding.pry
+      sheet.merge_cells sheet.rows[deal_index + VERTICAL_MARGIN - 1].cells[(start_position..last_cell)]
+      start_position = last_cell + 1
     end
+    # VALUE_COLUMNS.step(cell_width).each do |column|
+    #   first_cell = "#{column}#{VERTICAL_MARGIN + index * 5 + Plan::NAMES.values.index(plan_name)}"
+    #   last_cell = "#{(column.to_i(36) + cell_width - 1).to_s(36).upcase}#{VERTICAL_MARGIN + index * 5 + Plan::NAMES.values.index(plan_name)}"
+    #   sheet.merge_cells([first_cell, last_cell].join(':'))
+    # end
   end
 
-  def extract_data(deal, index, plan_name_index)
-    repeat_count = value_cell_width(plan_name_index) - 1
+  def extract_data(deal, index, plan_name)
+    repeat_count = value_cell_width(plan_name) - 1
 
-    plan_values = deal.plans.where(name: Plan::NAMES[plan_name_index]).order(:start_at).flat_map(&:values).map(&:value).map(&:to_f)
+    plan_values = deal.plans.where(name: plan_name).flat_map(&:values).map(&:value).map(&:to_f)
     repeated_plan_values = plan_values.map { |value| [value] + [nil] * repeat_count }.flatten
     data = [
       deal.name,
@@ -82,22 +90,23 @@ class DealXlsxService
       deal.unit_price,
       deal.promo_unit_price,
       deal.unit_type,
-      Plan::NAMES[plan_name_index],
-      repeated_plan_values
+      plan_name,
+      repeated_plan_values.first(deal.header_dates.length)
     ].flatten
+    #binding.pry
     data + [plan_values.sum]
   end
 
-  def value_cell_width(plan_name_index)
-    case Plan::NAMES[plan_name_index]
+  def value_cell_width(plan_name)
+    case plan_name
     when 'STRATEGIC' then 12
-    when 'PERSPECTIVE' then 4
+    when 'PERSPECTIVE' then 3
     else 1
     end
   end
 
   def deals_header(deal)
-    header_dates = deal.plans.where(name: 'IMMEDIATE').pluck(:start_at).map(&:to_date).map(&:inspect)
+    header_dates = deal.header_dates.map(&:to_date).map(&:inspect)
     [
       I18n.t('activerecord.attributes.deal.name'),
       I18n.t('activerecord.attributes.deal.sku'),
