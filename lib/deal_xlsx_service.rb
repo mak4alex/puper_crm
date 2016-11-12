@@ -56,26 +56,20 @@ class DealXlsxService
       deal.plans.each_with_index do |plan, plan_index|
 
         sheet.add_row(extract_data(deal, deal_index, plan.name), style: style)
-        #merge_value_columns(sheet, deal_index, plan_index, plan.name)
+        merge_value_columns(sheet, deal_index, plan_index, plan.name)
       end
       merge_info_rows(sheet, deal_index)
     end
   end
 
   def merge_value_columns(sheet, deal_index, plan_index, plan_name)
-    cell_width = value_cell_width(plan_name)
-    start_position = 8
+    cell_width = value_cell_width(plan_name) - 1
+    start_position = 7
     while start_position < @deals.last.header_dates.size do
       last_cell = start_position + cell_width
-      #binding.pry
-      sheet.merge_cells sheet.rows[deal_index + VERTICAL_MARGIN - 1].cells[(start_position..last_cell)]
+      sheet.merge_cells sheet.rows[plan_index + VERTICAL_MARGIN - 1].cells[(start_position..last_cell)]
       start_position = last_cell + 1
     end
-    # VALUE_COLUMNS.step(cell_width).each do |column|
-    #   first_cell = "#{column}#{VERTICAL_MARGIN + index * 5 + Plan::NAMES.values.index(plan_name)}"
-    #   last_cell = "#{(column.to_i(36) + cell_width - 1).to_s(36).upcase}#{VERTICAL_MARGIN + index * 5 + Plan::NAMES.values.index(plan_name)}"
-    #   sheet.merge_cells([first_cell, last_cell].join(':'))
-    # end
   end
 
   def extract_data(deal, index, plan_name)
@@ -93,7 +87,6 @@ class DealXlsxService
       plan_name,
       repeated_plan_values.first(deal.header_dates.length)
     ].flatten
-    #binding.pry
     data + [plan_values.sum]
   end
 
