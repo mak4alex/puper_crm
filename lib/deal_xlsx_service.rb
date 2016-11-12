@@ -4,7 +4,7 @@ class DealXlsxService
   VALUE_COLUMNS = 'H'..'S'
   COLUMNS = {
     name: 0, sku: 1, currency_name: 2, unit_price: 3, promo_unit_price: 4, unit: 5,
-    plan_level: 6, values: (7..18)
+    plan_level: 6, values: (7..-4), accepted: -2, description: -1
   }
 
   def initialize(path)
@@ -32,20 +32,28 @@ class DealXlsxService
     xlsx = Roo::Spreadsheet.open(@path.to_s)
     sheet_name = xlsx.sheets.first
     sheet = xlsx.sheet(sheet_name)
-    (VERTICAL_MARGIN..xlsx.last_row).each do |row|
+    start_at = Date.parse(xlsx.row(1)[7])
+    end_at = Date.parse(xlsx.row(1)[-4])
+    (VERTICAL_MARGIN..xlsx.last_row).each do |row_index|
+      row = sheet.row(row_index)
       deal_attributes = {
-        name: sheet.row(row)[COLUMNS[:name]],
-        sku: sheet.row(row)[COLUMNS[:sku]],
-        currency_id: Currency.find_by(abbr: sheet.row(row)[COLUMNS[:currency_name]]).id,
-        unit_price: sheet.row(row)[COLUMNS[:unit_price]],
-        promo_unit_price: sheet.row(row)[COLUMNS[:promo_unit_price]],
-        unit_type: sheet.row(row)[COLUMNS[:unit]],
-        type: type
+        name: row[COLUMNS[:name]],
+        sku: row[COLUMNS[:sku]],
+        currency_id: Currency.find_by(abbr: row[COLUMNS[:currency_name]]).id,
+        unit_price: row[COLUMNS[:unit_price]],
+        promo_unit_price: row[COLUMNS[:promo_unit_price]],
+        unit_type: row[COLUMNS[:unit]],
+        type: type,
+        start_at: start_at,
+        end_at: end_at,
+        accepted: row[COLUMNS[:accepted]],
+        description: row[COLUMNS[:description]]
       }
+      deal = Deal.new(deal_attributes)
       deal = Deal.find_or_create_by(deal_attributes)
-      plan = deal.plans.new(name: sheet.row(row)[COLUMNS[:plan_level]])
-      sheet.row(row)[COLUMNS[:values]].compact.each { |value| plan.values.new(value: value) }
-      deal.save
+      plan = deal.plans.new(name: row[COLUMNS[:plan_level]])
+      row[COLUMNS[:values]].compact.each { |value| plan.values.new(value: value) }
+      deal.save!
     end
   end
 
@@ -85,9 +93,12 @@ class DealXlsxService
       deal.promo_unit_price,
       deal.unit_type,
       plan_name,
-      repeated_plan_values.first(deal.header_dates.length)
+      repeated_plan_values.first(deal.header_dates.length),
+      plan_values.sum,
+      deal.accepted.inspect,
+      deal.description
     ].flatten
-    data + [plan_values.sum]
+    data + []
   end
 
   def value_cell_width(plan_name)
@@ -110,7 +121,8 @@ class DealXlsxService
       I18n.t('activerecord.attributes.plan.name'),
       header_dates,
       I18n.t('export.total', default: 'Total'),
-      I18n.t('activerecord.attributes.plan.accepted')
+      I18n.t('activerecord.attributes.plan.accepted'),
+      I18n.t('activerecord.attributes.plan.description')
     ].flatten
   end
 

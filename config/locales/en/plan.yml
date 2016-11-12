@@ -4,3 +4,4 @@ en:
       plan:
         name: Plan level
         accepted: Accepted
+        description: Description
