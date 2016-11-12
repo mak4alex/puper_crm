@@ -66,7 +66,6 @@ Deal.all.each do |deal|
   deal.plans.each do |plan|
     plan.values.each do |value|
       value.value = (rand * 100).round(2)
-      value.set_at = Time.now
       value.save!
     end
   end

@@ -20,6 +20,9 @@ class Plan < ApplicationRecord
     immediate: 'IMMEDIATE'
   }
 
+  MANAGER_PLANS = [Plan::NAMES[:strategic], Plan::NAMES[:perspective]]
+  CLIENT_PLANS = [Plan::NAMES[:operational], Plan::NAMES[:current], Plan::NAMES[:immediate]]
+
   STEPS = {
     quater: 'QUARTER',
     month: 'MONTH',
@@ -33,8 +36,7 @@ class Plan < ApplicationRecord
   }
 
   belongs_to :deal
-  has_many :values
-
+  has_many :values, dependent: :destroy
 
   before_create do |plan|
     if plan.name == NAMES[:strategic]

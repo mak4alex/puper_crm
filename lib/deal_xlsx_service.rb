@@ -34,6 +34,7 @@ class DealXlsxService
     sheet = xlsx.sheet(sheet_name)
     start_at = Date.parse(xlsx.row(1)[7])
     end_at = Date.parse(xlsx.row(1)[-4])
+    deal = nil
     (VERTICAL_MARGIN..xlsx.last_row).each do |row_index|
       row = sheet.row(row_index)
       deal_attributes = {
@@ -49,12 +50,16 @@ class DealXlsxService
         accepted: row[COLUMNS[:accepted]],
         description: row[COLUMNS[:description]]
       }
-      deal = Deal.new(deal_attributes)
-      deal = Deal.find_or_create_by(deal_attributes)
-      plan = deal.plans.new(name: row[COLUMNS[:plan_level]])
-      row[COLUMNS[:values]].compact.each { |value| plan.values.new(value: value) }
-      deal.save!
+      deal ||= Deal.create!(deal_attributes)
+      plan = deal.plans.where(name: row[COLUMNS[:plan_level]]).first
+      row[COLUMNS[:values]].compact.each_with_index do |value, index|
+        plan.values[index].value = value
+        plan.values[index].save!
+      end
+      plan.save!
+      binding.pry
     end
+    deal
   end
 
   private

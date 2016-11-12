@@ -33,7 +33,7 @@ class Deal < ApplicationRecord
   }
 
   belongs_to :currency
-  has_many :plans, foreign_key: :deal_id
+  has_many :plans, foreign_key: :deal_id, dependent: :destroy
   has_many :offers, foreign_key: :deal_id
   has_many :agents, through: :offers
 
@@ -68,17 +68,50 @@ class Deal < ApplicationRecord
   end
 
 
-  def import(imported_deal)
-    imported_deal.plans.each do |plan|
-      if plan.name != Plan::NAMES[:strategic] && plan.name != Plan::NAMES[:perspective]
-        current_plan = plans.where(name: plan.name)
-        values = plan.values.to_a
-        current_plan.values.each do |value|
-          
-        end
+  def import(params)
+    tmp_file = params[:file].tempfile
+    destiny_path = Rails.root.join('tmp', "#{Time.now.to_i}.xlsx")
+    FileUtils.move tmp_file.path, destiny_path
+    imported_deal = DealXlsxService.new(destiny_path).import(params[:deal_type])
 
+    imported_deal.plans.each do |plan|
+       if ![Plan::NAMES[:strategic], Plan::NAMES[:perspective]].include?(plan.name)
+         self_plan = self.plans.where(name: plan.name).first
+         self_values = self_plan.values
+         values = plan.values
+         index = 0
+         while index < values.size
+           self_values[index].value +=  values[index].value
+           self_values[index].save!
+           index += 1
+         end
+       end
+    end
+    imported_deal.destroy
+  end
+
+  def recalc
+    manager_sum = 0.0
+    client_sum = 0.0
+    self.plans.where(name: Plan::MANAGER_PLANS).each do |manager_plan|
+      manager_plan.values.each do |manager_value|
+        manager_sum += manager_value.value
+        client_plan_sum = 0.0
+        self.plans.where(name: Plan::CLIENT_PLANS).each do |client_plan|
+          client_values =  client_plan.values.where("set_at >= ? AND set_at <= ?",
+            manager_value.set_at, manager_value.set_at + Plan::PERIODS[manager_plan.step])
+          client_plan_sum = client_values.map(&:value).reduce(&:+)
+          client_sum += client_plan_sum.to_f
+          #binding.pry
+        end
+        manager_value.accepted = manager_value.value.to_f >= client_plan_sum.to_f
+        manager_value.save!
       end
     end
+    self.probability = (manager_sum / client_sum) rescue 0.0
+    self.probability = 1 if self.probability.infinite?
+    self.accepted = self.probability.to_f > 0.5
+    self.save!
   end
 
   private

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :supplier_deals, only: [:index, :show]
   resources :deals, only: [:new, :create] do
     post 'import', on: :member
+    post 'recalc', on: :member
   end
   resources :plans, only: [:new, :create]
   resources :values, only: [:create]

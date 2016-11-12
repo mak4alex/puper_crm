@@ -14,10 +14,12 @@ class DealsController < ApplicationController
   end
 
   def import
-    p params[:file]
-    #new_offer = Import(params[:file])
-    new_deal = Offer.first.deal
-    Deal.find(params[:id]).import(new_deal)
+    Deal.find(params[:id]).import(params)
+    redirect_back(fallback_location: root_path)
+  end
+
+  def recalc
+    Deal.find(params[:id]).recalc
     redirect_back(fallback_location: root_path)
   end
 

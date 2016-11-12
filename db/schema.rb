@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109221159) do
+ActiveRecord::Schema.define(version: 20161112220306) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "type"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20161109221159) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.datetime "set_at"
+    t.boolean  "accepted"
     t.index ["plan_id"], name: "index_values_on_plan_id"
   end
 

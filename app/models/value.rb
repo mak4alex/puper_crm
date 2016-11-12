@@ -15,7 +15,7 @@ class Value < ApplicationRecord
 
   def self.save_array(values)
     values.each do |id, value|
-      Value.update(id, value: value.to_f, set_at: Time.now)
+      Value.update(id, value: value.to_f)
     end
   end
 
