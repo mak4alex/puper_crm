@@ -24,7 +24,7 @@ class DealXlsxService
       end
 
       package.serialize(@path)
-      `libreoffice #{@path}`
+      # `libreoffice #{@path}`
     end
   end
 
@@ -57,7 +57,7 @@ class DealXlsxService
         plan.values[index].save!
       end
       plan.save!
-      binding.pry
+      # binding.pry
     end
     deal
   end
